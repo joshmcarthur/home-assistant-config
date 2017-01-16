@@ -1,0 +1,225 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 76
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Pacific/Auckland
+  customize:
+    sensor.netatmo_indoor_temperature:
+      friendly_name: "Living Room Temperature"
+    sensor.netatmo_indoor_humidity:
+      friendly_name: "Living Room Humidity"
+    sensor.netatmo_outdoor_temperature:
+      friendly_name: "Temperature"
+    sensor.netatmo_outdoor_humidity:
+      friendly_name: "Humidity"
+    sensor.netatmo_indoor_co2:
+      friendly_name: "Indoor CO2"
+    sensor.netatmo_indoor_noise:
+      friendly_name: "Noise Levels"
+    sensor.weather_forecast_wind_speed:
+      friendly_name: "Wind Speed"
+      icon: mdi:weather-windy
+    sensor.bedroom_humidity:
+      icon: mdi:water-percent
+    sensor.garage_humidity:
+      icon: mdi:water-percent
+    sensor.study_humidity:
+      icon: mdi:water-percent
+    sensor.study_temperature:
+      icon: mdi:thermometer
+    sensor.bedroom_temperature:
+      icon: mdi:thermometer
+    sensor.garage_temperature:
+      icon: mdi:thermometer
+    sensor.sunrise:
+      icon: mdi:weather-sunset-up
+    sensor.sunset:
+      icon: mdi:weather-sunset-down
+    sensor.speedtest_download:
+      icon: mdi:download
+    sensor.speedtest_upload:
+      icon: mdi:upload
+    camera.study_camera:
+      friendly_name: "Study"
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+  ssl_certificate: !secret ssl_certificate_path
+  ssl_key: !secret ssl_key_path
+
+# Checks for available updates
+updater:
+
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# WEmo
+wemo:
+
+group:
+  default_view:
+    view: yes
+    entities:
+      - group.presence
+      - group.climate
+      - group.outside
+      - group.lights
+      - group.health_and_security
+  presence:
+    name: "Who is home?"
+    view: no
+    entities:
+      - device_tracker.josh_main_phone
+      - device_tracker.gemma_main_phone
+  climate:
+    name: Climate
+    view: no
+    entities:
+      - sensor.weather_forecast_weather
+      - sensor.netatmo_indoor_temperature
+      - sensor.netatmo_indoor_humidity
+      - sensor.bedroom_temperature
+      - sensor.bedroom_humidity
+      - sensor.weather_forecast_temp_max
+      - sensor.weather_forecast_temp_min
+  lights:
+    name: Lighting
+    view: no
+    entities:
+      - light.hallway
+      - light.master_bedroom
+      - light.lightbulb_03
+      - light.lightbulb_04
+  entertainment:
+    name: Entertainment
+    view: yes
+    entities:
+      - media_player.stringbag
+      - media_player.ua50es6200_ua50es6200
+      - group.network
+  network:
+    view: no
+    name: Network
+    entities:
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+  outside:
+    name: Outside
+    view: no
+    entities:
+      - sensor.netatmo_outdoor_temperature
+      - sensor.netatmo_outdoor_humidity
+      - sensor.weather_forecast_wind_speed
+      - sensor.sunrise
+      - sensor.sunset
+  health_and_security:
+    name: "Health & Security"
+    view: no
+    entities:
+      - camera.study_camera
+      - sensor.netatmo_indoor_co2
+      - sensor.netatmo_indoor_noise
+      - sensor.garage_temperature
+      - sensor.garage_humidity
+
+device_tracker:
+  - platform: ddwrt
+    host: 192.168.1.1
+    username: !secret router_username
+    password: !secret router_password
+
+camera:
+  - platform: generic
+    name: study_camera
+    still_image_url: !secret study_camera_path_with_credentials
+
+sensor:
+  - platform: yweather
+    name: weather_forecast
+    monitored_conditions:
+      - weather
+      - wind_speed
+      - temp_min
+      - temp_max
+  - platform: netatmo
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Bedroom Temperature"
+    value_template: "{{value_json.bedroom.temperature}}"
+    unit_of_measurement: "°C"
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Bedroom Humidity"
+    value_template: "{{value_json.bedroom.humidity}}"
+    unit_of_measurement: "%"
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Garage Temperature"
+    value_template: "{{value_json.garage.temperature}}"
+    unit_of_measurement: "°C"
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Garage Humidity"
+    value_template: "{{value_json.garage.humidity}}"
+    unit_of_measurement: "%"
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Study Temperature"
+    value_template: "{{value_json.study.temperature}}"
+    unit_of_measurement: "°C"
+  - platform: rest
+    resource: http://192.168.1.180
+    name: "Study Humidity"
+    value_template: "{{value_json.study.humidity}}"
+    unit_of_measurement: "%"
+  - platform: speedtest
+    minute:
+      - 0
+      - 30
+    monitored_conditions:
+      - upload
+      - download
+  - platform: template
+    sensors:
+      sunrise:
+         friendly_name: Sunrise
+         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_rising)) | timestamp_local)[11:16] }}'
+      sunset:
+         friendly_name: Sunset
+         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
+
+netatmo:
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
+  password: !secret netatmo_password
+
+# Text to speech
+tts:
+  platform: google
