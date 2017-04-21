@@ -7,4 +7,3 @@ home_assistant:
   volumes:
     - .:/config
     - /etc/localtime:/etc/localtime:ro
-    - /home/josh/home-assistant-lets-encrypt/etc/letsencrypt/live:/etc/ssl/certs
