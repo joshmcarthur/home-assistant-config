@@ -1,8 +1,10 @@
 home_assistant:
   container_name: home_assistant
-  image: lroguet/rpi-home-assistant:latest
+  build: .
   net: host
+  ports:
+    - 8123:8123
   volumes:
     - .:/config
     - /etc/localtime:/etc/localtime:ro
-    - /home/josh/home-assistant-lets-encrypt/etc/letsencrypt/archive:/etc/ssl/certs
+    - /home/josh/home-assistant-lets-encrypt/etc/letsencrypt/live:/etc/ssl/certs
