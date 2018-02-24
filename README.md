@@ -1,4 +1,4 @@
-# home-assistant-config
+# homeassistant-config
 
 My HomeAssistant.io configuration files. 
 
