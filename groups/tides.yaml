@@ -1,0 +1,9 @@
+tides:
+  name: Oceanic Information
+  view: no
+  entities:
+    - sensor.tidespy_3114_high
+    - sensor.tidespy_3114_low
+    - sensor.plimmerton_beach_water_quality
+    - sensor.onepoto_ramp_water_quality
+    - sensor.pauatahanui_inlet_water_quality

@@ -1,0 +1,15 @@
+- platform: rest
+  name: "Plimmerton Beach Water Quality"
+  resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%272091%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+  value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'
+  scan_interval: 3600
+- platform: rest
+  name: "Pauatahanui Inlet Water Quality"
+  scan_interval: 3600
+  resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%272960%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+  value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'
+- platform: rest
+  name: "Onepoto Ramp Water Quality"
+  scan_interval: 3600
+  resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%271183%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+  value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'

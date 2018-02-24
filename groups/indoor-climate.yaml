@@ -1,0 +1,18 @@
+indoor_climate:
+  name: Indoor Climate
+  view: no
+  entities:
+    - climate.hvac
+    - sensor.weather_forecast_weather
+    - sensor.netatmo_indoor_temperature
+    - sensor.netatmo_indoor_humidity
+    - sensor.masterbedroomclimate_1_1
+    - sensor.masterbedroomclimate_1_0
+    - sensor.studyclimate_3_0
+    - sensor.studyclimate_3_1
+    - sensor.garagebasestation_2_1
+    - sensor.garagebasestation_2_0
+    - sensor.roofclimate_1_0
+    - sensor.roofclimate_1_1
+    - sensor.weather_forecast_temperature_max
+    - sensor.weather_forecast_temperature_min

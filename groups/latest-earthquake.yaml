@@ -1,0 +1,9 @@
+latest_earthquake:
+  view: no
+  name: Latest Earthquake
+  entities:
+    - sensor.geonet_latest_quake_locality
+    - sensor.geonet_latest_quake_magnitude
+    - sensor.geonet_latest_quake_depth
+    - sensor.geonet_latest_quake_time
+    - camera.geonet_latest_quake_location

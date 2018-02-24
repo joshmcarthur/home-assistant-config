@@ -1,0 +1,8 @@
+- platform: yweather
+  name: weather_forecast
+  monitored_conditions:
+    - weather
+    - wind_speed
+    - temp_min
+    - temp_max
+- platform: netatmo

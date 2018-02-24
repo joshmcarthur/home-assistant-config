@@ -1,0 +1,3 @@
+- platform: tidespy
+  api_key: !secret tidespy_api_key
+  place_id: !secret tidespy_place_id

@@ -1,0 +1,6 @@
+health:
+  name: "Health"
+  view: no
+  entities:
+    - sensor.netatmo_indoor_co2
+    - sensor.netatmo_indoor_noise

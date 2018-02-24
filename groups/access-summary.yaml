@@ -1,0 +1,5 @@
+access_summary:
+  name: "Access Summary"
+  view: no
+  entities:
+    - sensor.garage_door_1_status

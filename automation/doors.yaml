@@ -1,0 +1,20 @@
+- alias: 'Garage Door - Open Notification'
+  trigger: 
+    platform: state
+    entity_id: switch.garagebasestation_2_2
+    from: 'on'
+    to: 'off'
+  action:
+    service: notify.notify
+    data:
+      message: "Garage door was triggered"
+- alias: 'Garage Door - Closed Notification'
+  trigger: 
+    platform: state
+    entity_id: switch.garagebasestation_2_2
+    from: 'off'
+    to: 'on'
+  action:
+    service: notify.notify
+    data:
+      message: "Garage door was triggered"

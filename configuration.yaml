@@ -10,73 +10,8 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Pacific/Auckland
-  customize:
-    sensor.netatmo_indoor_temperature:
-      friendly_name: "Living Room Temperature"
-    sensor.netatmo_indoor_humidity:
-      friendly_name: "Living Room Humidity"
-    sensor.netatmo_outdoor_temperature:
-      friendly_name: "Temperature"
-    sensor.netatmo_outdoor_humidity:
-      friendly_name: "Humidity"
-    sensor.netatmo_indoor_co2:
-      friendly_name: "Indoor CO2"
-    sensor.netatmo_indoor_noise:
-      friendly_name: "Noise Levels"
-    sensor.weather_forecast_wind_speed:
-      friendly_name: "Wind Speed"
-      icon: mdi:weather-windy
-    sensor.masterbedroomclimate_1_0:
-      friendly_name: "Master Bedroom Humidity"
-      icon: mdi:water-percent
-    sensor.garagebasestation_2_0:
-      icon: mdi:water-percent
-      friendly_name: "Garage Humidity"
-    sensor.studyclimate_3_0:
-      icon: mdi:water-percent
-      friendly_name: "Study Humidity"
-    sensor.studyclimate_3_1:
-      icon: mdi:thermometer
-      friendly_name: "Study Temperature"
-    sensor.masterbedroomclimate_1_1:
-      friendly_name: "Master Bedroom Temperature"
-      icon: mdi:thermometer
-    sensor.garagebasestation_2_1:
-      icon: mdi:thermometer
-      friendly_name: "Garage Temperature"
-    sensor.sunrise:
-      icon: mdi:weather-sunset-up
-    sensor.sunset:
-      icon: mdi:weather-sunset-down
-    sensor.speedtest_download:
-      icon: mdi:download
-    sensor.speedtest_upload:
-      icon: mdi:upload
-    sensor.flick_energy_price:
-      icon: mdi:power-plug
-      friendly_name: "Flick Power Price"
-    sensor.metlink_paremata_services:
-      friendly_name: "Paremata Departures"
-      icon: mdi:train
-    camera.front_camera:
-      friendly_name: "Outside - Front"
-    camera.garden_camera:
-      friendly_name: "Outside - Garden"
-    camera.paremata_roundabout:
-      friendly_name: "Paremata Intersection SH58 & 1"
-    sensor.geonet_latest_quake_time:
-      friendly_name: Time
-      icon: mdi:clock
-    sensor.geonet_latest_quake_locality:
-      friendly_name: Locality
-      icon: mdi:map-marker
-    sensor.geonet_latest_quake_magnitude:
-      friendly_name: Magnitude
-    sensor.geonet_latest_quake_depth:
-      friendly_name: Depth
-    script.toggle_main_garage_door:
-      friendly_name: "Garage Door Control"
-      icon: mdi:garage-open
+  customize: !include customizations.yaml
+  customize_glob: !include_dir_merge_named customizations   
 
 # Enables the frontend
 frontend:
@@ -92,6 +27,11 @@ http:
 # Checks for available updates
 updater:
 
+logger:
+  logs:
+    homeassistant.components.mysensors: debug
+    homeassistant.components.climate.mysensors: debug
+    homeassistant.sensor.mysensors: debug
 
 # Discover some devices automatically
 discovery:
@@ -108,235 +48,38 @@ logbook:
 # MQTT config
 mqtt:
   broker: !secret mqtt_host
-  protocol: 3.1
   keepalive: 60
   client_id: "home-assistant"
 
 # Track the sun
 sun:
 
-# WEmo
-wemo:
-  static:
-    - 192.168.1.138
-
-group:
-  default_view:
-    view: yes
-    entities:
-      - group.presence
-      - group.climate
-      - group.outside
-      - group.health_and_security
-      - group.lights
-      - group.latest_earthquake
-  presence:
-    name: "Who is home?"
-    view: no
-    entities:
-      - device_tracker.josh_main_phone
-      - device_tracker.gemma_main_phone
-  climate:
-    name: Climate
-    view: no
-    entities:
-      - sensor.weather_forecast_weather
-      - sensor.netatmo_indoor_temperature
-      - sensor.netatmo_indoor_humidity
-      - sensor.masterbedroomclimate_1_1
-      - sensor.masterbedroomclimate_1_0
-      - sensor.studyclimate_3_0
-      - sensor.studyclimate_3_1
-      - sensor.garagebasestation_2_1
-      - sensor.garagebasestation_2_0
-      - sensor.weather_forecast_temp_max
-      - sensor.weather_forecast_temp_min
-  lights:
-    name: Lighting
-    view: no
-    entities:
-      - light.hallway
-      - light.bedroom
-  entertainment:
-    name: Entertainment
-    view: yes
-    entities:
-      - media_player.stringbag
-      - media_player.ua50es6200_ua50es6200
-  utilities:
-    name: Utilities
-    view: yes
-    entities:
-      - group.network
-      - group.power
-  power:
-    name: Power
-    view: no
-    entities:
-      - sensor.flick_energy_price
-  transit:
-    name: Transit
-    view: yes
-    entities:
-      - group.public_transit
-      - camera.paremata_roundabout
-  public_transit:
-    view: no
-    name: Public Transport
-    entities:
-      - sensor.metlink_paremata_services
-  latest_earthquake:
-    view: no
-    name: Latest Earthquake
-    entities:
-      - sensor.geonet_latest_quake_locality
-      - sensor.geonet_latest_quake_magnitude
-      - sensor.geonet_latest_quake_depth
-      - sensor.geonet_latest_quake_time
-  network:
-    view: no
-    name: Network
-    entities:
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
-  outside:
-    name: Outside
-    view: no
-    entities:
-      - sensor.netatmo_outdoor_temperature
-      - sensor.netatmo_outdoor_humidity
-      - sensor.weather_forecast_wind_speed
-      - sensor.weather_forecast_weather
-      - sensor.sunrise
-      - sensor.sunset
-  health_and_security:
-    name: "Health & Security"
-    view: no
-    entities:
-      - camera.garden_camera
-      - camera.front_camera
-      - sensor.netatmo_indoor_co2
-      - sensor.netatmo_indoor_noise
-      - script.toggle_main_garage_door
+group: !include_dir_merge_named groups/
+camera: !include_dir_list cameras/
+script: !include_dir_merge_named scripts/
+sensor: !include_dir_merge_list sensors/
+automation: !include_dir_merge_list automation/
 
 device_tracker:
   - platform: ddwrt
-    host: 192.168.1.1
+    host: !secret router_host
     username: !secret router_username
     password: !secret router_password
 
-android_ip_webcam:
-  - host: 192.168.1.185
-    name: garden_camera
-    switches:
-      - night_vision
-      - torch
-      - video_recording
-
-camera:
-  - platform: generic
-    name: front_camera
-    still_image_url: !secret front_camera_path_with_credentials
-  - platform: generic
-    name: paremata_roundabout
-    still_image_url: http://www.trafficnz.info/camera/637.jpg
-  - platform: generic
-    name: geonet_latest_quake_location
-    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.sensor.geonet_latest_quake_latitude}},{{ states.sensor.geonet_latest_quake_longitude }}&zoom=6&size=500x500&maptype=roadmap&markers={{ states.sensor.geonet_latest_quake_latitude }},{{ states.sensor.geonet_latest_quake_longitude }}
-    limit_refetch_to_url_change: true
-
-script:
-  toggle_main_garage_door:
-    sequence:
-      - service: switch.toggle
-        data:
-          entity_id: switch.garagebasestation_2_2
-
-sensor:
-  - platform: yweather
-    name: weather_forecast
-    monitored_conditions:
-      - weather
-      - wind_speed
-      - temp_min
-      - temp_max
-  - platform: netatmo
-  - platform: rest
-    name: geonet_latest_quake_time
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    verify_ssl: false
-    value_template: '{{ value_json.features.0.properties.time }}'
-  - platform: rest
-    name: geonet_latest_quake_locality
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    verify_ssl: false
-    value_template: '{{ value_json.features.0.properties.locality }}'
-  - platform: rest
-    name: geonet_latest_quake_depth
-    verify_ssl: false
-    unit_of_measurement: km
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    value_template: '{{ value_json.features.0.properties.depth | round(2) }}'
-  - platform: rest
-    name: geonet_latest_quake_magnitude
-    verify_ssl: false
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    value_template: '{{ value_json.features.0.properties.magnitude | round(1) }}'
-  - platform: rest
-    name: geonet_latest_quake_latitude
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    verify_ssl: false
-    value_template: '{{ value_json.features.0.geometry.coordinates.0 }}'
-  - platform: rest
-    name: geonet_latest_quake_longitude
-    resource: https://api.geonet.org.nz/quake?MMI=4
-    verify_ssl: false
-    value_template: '{{ value_json.features.0.geometry.coordinates.1 }}'
-  - platform: rest
-    name: metlink_paremata_services
-    resource: https://www.metlink.org.nz/api/v1/StopDepartures/PARE
-    verify_ssl: false
-    value_template: '{{ value_json.Services.0.DestinationStopName }} - {{ (value_json.Services.0.DisplayDepartureSeconds / 60) | round(1)}}'
-    unit_of_measurement: "minutes"
-  - platform: rest
-    name: flick_energy_price
-    verify_ssl: false
-    resource: "https://api.flick.energy/customer/mobile_provider/price"
-    unit_of_measurement: "c"
-    value_template: '{{ value_json.needle.price }}'
-    headers:
-      Authorization: !secret flick_authorization_header
-  - platform: torque
-    email: !secret torque_registration_email
-    name: !secret torque_vehicle_registration
-  - platform: speedtest
-    minute:
-      - 0
-      - 30
-    monitored_conditions:
-      - upload
-      - download
-  - platform: template
-    sensors:
-      sunrise:
-         friendly_name: Sunrise
-         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_rising)) | timestamp_local)[11:16] }}'
-      sunset:
-         friendly_name: Sunset
-         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
-
 notify:
-  - platform: facebook
-    page_access_token: !secret facebook_page_access_token
+  - platform: html5
+    gcm_api_key: !secret gcm_api_key
+    gcm_sender_id: !secret gcm_sender_id
 
 mysensors:
   gateways:
     - device: mqtt
-      persistence_file: 'mysensors.json'
+      persistence_file: '/config/mysensors.json'
       topic_in_prefix: 'mysensors-out'
       topic_out_prefix: 'mysensors-in'
-  optimistic: false
-  retain: false
+  optimistic: true
+  retain: true
+  debug: true
   persistence: true
 
 netatmo:
@@ -345,6 +88,10 @@ netatmo:
   username: !secret netatmo_username
   password: !secret netatmo_password
 
+
+climate:
+  - platform: mysensors
+    name: studyclimate_3_2
 # Text to speech
 tts:
   platform: google

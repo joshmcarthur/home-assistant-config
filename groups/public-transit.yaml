@@ -1,0 +1,7 @@
+public_transit:
+  view: no
+  name: Public Transport
+  entities:
+    - sensor.metlink_stop_pare_route_kpl
+    - sensor.metlink_stop_pori_route_kpl
+    - sensor.metlink_stop_well_route_kpl

@@ -1,0 +1,10 @@
+outside_climate:
+  name: Outside
+  view: no
+  entities:
+    - sensor.netatmo_outdoor_temperature
+    - sensor.netatmo_outdoor_humidity
+    - sensor.weather_forecast_wind_speed
+    - sensor.weather_forecast_condition
+    - sensor.sunrise
+    - sensor.sunset

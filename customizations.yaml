@@ -1,0 +1,92 @@
+sensor.netatmo_indoor_temperature:
+  friendly_name: "Living Room Temperature"
+sensor.netatmo_indoor_humidity:
+  friendly_name: "Living Room Humidity"
+sensor.netatmo_outdoor_temperature:
+  friendly_name: "Temperature"
+sensor.netatmo_outdoor_humidity:
+  friendly_name: "Humidity"
+sensor.netatmo_indoor_co2:
+  friendly_name: "Indoor CO2"
+sensor.netatmo_indoor_noise:
+  friendly_name: "Noise Levels"
+sensor.weather_forecast_wind_speed:
+  friendly_name: "Wind Speed"
+  icon: mdi:weather-windy
+sensor.masterbedroomclimate_1_0:
+  friendly_name: "Master Bedroom Humidity"
+  icon: mdi:water-percent
+sensor.roofclimate_1_0:
+  friendly_name: "Roof Humidity"
+  icon: mdi:water-percent
+sensor.garagebasestation_2_0:
+  icon: mdi:water-percent
+  friendly_name: "Garage Humidity"
+sensor.studyclimate_3_0:
+  icon: mdi:water-percent
+  friendly_name: "Study Humidity"
+sensor.studyclimate_3_1:
+  icon: mdi:thermometer
+  friendly_name: "Study Temperature"
+sensor.masterbedroomclimate_1_1:
+  friendly_name: "Master Bedroom Temperature"
+  icon: mdi:thermometer
+sensor.roofclimate_1_1:
+  friendly_name: "Roof Temperature"
+  icon: mdi:thermometer
+sensor.garagebasestation_2_1:
+  icon: mdi:thermometer
+  friendly_name: "Garage Temperature"
+sensor.sunrise:
+  icon: mdi:weather-sunset-up
+sensor.sunset:
+  icon: mdi:weather-sunset-down
+sensor.speedtest_download:
+  icon: mdi:download
+sensor.speedtest_upload:
+  icon: mdi:upload
+sensor.flick_energy_price:
+  icon: mdi:power-plug
+  friendly_name: "Flick Power Price"
+sensor.metlink_stop_pare_route_kpl:
+  friendly_name: "Next Paremata Departure"
+  icon: mdi:train
+sensor.metlink_stop_pori_route_kpl:
+  friendly_name: "Next Porirua Departure"
+  icon: mdi:train
+sensor.metlink_stop_well_route_kpl:
+  friendly_name: "Next Wellington Departure"
+  icon: mdi:train
+camera.front_camera:
+  friendly_name: "Outside - Front"
+camera.garden_camera:
+  friendly_name: "Outside - Garden"
+camera.paremata_roundabout:
+  friendly_name: "Paremata Intersection SH58 & 1"
+sensor.geonet_latest_quake_time:
+  friendly_name: Time
+  icon: mdi:clock
+sensor.geonet_latest_quake_locality:
+  friendly_name: Locality
+  icon: mdi:map-marker
+sensor.geonet_latest_quake_magnitude:
+  friendly_name: Magnitude
+sensor.geonet_latest_quake_depth:
+  friendly_name: Depth
+camera.geonet_latest_quake_location:
+  friendly_name: "Latest Quake Location"
+script.toggle_main_garage_door:
+  friendly_name: "Main Garage Door Control"
+  icon: mdi:remote
+sensor.weather_forecast_temperature_max:
+  friendly_name: "Forecast Temperature (Max)"
+sensor.weather_forecast_temperature_min:
+  friendly_name: "Forecast Temperature (Min)"
+sensor.weather_forecast_condition:
+  friendly_name: "Conditions"
+sensor.hot_tub_3_0:
+  friendly_name: "Tub Intake Temperature"
+sensor.hot_tub_3_10:
+  friendly_name: "Tub Outlet Temperature"
+switch.hot_tub_3_20:
+  friendly_name: "Back Garden Lighting"

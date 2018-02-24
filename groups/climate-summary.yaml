@@ -1,0 +1,7 @@
+climate_summary:
+  name: "Environment Summary"
+  view: no
+  entities:
+    - sensor.netatmo_indoor_temperature
+    - sensor.netatmo_outdoor_temperature
+    - sensor.weather_forecast_wind_speed

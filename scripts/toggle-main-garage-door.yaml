@@ -1,0 +1,5 @@
+toggle_main_garage_door:
+  sequence:
+    - service: switch.toggle
+      data:
+        entity_id: switch.garagebasestation_2_2

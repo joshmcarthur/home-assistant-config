@@ -1,0 +1,9 @@
+- platform: rest
+  name: flick_energy_price
+  verify_ssl: false
+  scan_interval: 1800 # 30 minutes
+  resource: "https://api.flick.energy/customer/mobile_provider/price"
+  unit_of_measurement: "c"
+  value_template: '{{ value_json.needle.price }}'
+  headers:
+    Authorization: !secret flick_authorization_header

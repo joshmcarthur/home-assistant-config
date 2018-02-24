@@ -1,0 +1,6 @@
+main_garage_door:
+  name: "Main Garage Door"
+  view: no
+  entities:
+    - script.toggle_main_garage_door
+    - sensor.garage_door_1_status

@@ -1,0 +1,8 @@
+default_view:
+  view: yes
+  entities:
+    - group.presence
+    - camera.front_camera
+    - camera.garden_camera
+    - group.climate_summary
+    - group.access_summary

@@ -1,0 +1,4 @@
+platform: generic
+name: geonet_latest_quake_location
+still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.sensor.geonet_latest_quake_longitude.state}},{{ states.sensor.geonet_latest_quake_latitude.state }}&zoom=6&size=500x500&maptype=roadmap&markers={{ states.sensor.geonet_latest_quake_longitude.state }},{{ states.sensor.geonet_latest_quake_latitude.state }}
+limit_refetch_to_url_change: true

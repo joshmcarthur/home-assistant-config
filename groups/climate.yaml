@@ -1,0 +1,8 @@
+climate:
+  name: "Environment"
+  view: yes
+  entities:
+    - group.indoor_climate
+    - group.outside_climate
+    - group.latest_earthquake
+    - group.health

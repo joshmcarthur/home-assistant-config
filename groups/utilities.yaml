@@ -1,0 +1,7 @@
+utilities:
+  name: Utilities
+  view: yes
+  entities:
+    - group.network
+    - group.power
+    - group.hot_tub

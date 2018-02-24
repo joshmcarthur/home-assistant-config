@@ -1,0 +1,31 @@
+- platform: rest
+  name: geonet_latest_quake_time
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  verify_ssl: false
+  value_template: '{{ value_json.features.0.properties.time }}'
+- platform: rest
+  name: geonet_latest_quake_locality
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  verify_ssl: false
+  value_template: '{{ value_json.features.0.properties.locality }}'
+- platform: rest
+  name: geonet_latest_quake_depth
+  verify_ssl: false
+  unit_of_measurement: km
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  value_template: '{{ value_json.features.0.properties.depth | round(2) }}'
+- platform: rest
+  name: geonet_latest_quake_magnitude
+  verify_ssl: false
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  value_template: '{{ value_json.features.0.properties.magnitude | round(1) }}'
+- platform: rest
+  name: geonet_latest_quake_latitude
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  verify_ssl: false
+  value_template: '{{ value_json.features.0.geometry.coordinates.0 }}'
+- platform: rest
+  name: geonet_latest_quake_longitude
+  resource: https://api.geonet.org.nz/quake?MMI=4
+  verify_ssl: false
+  value_template: '{{ value_json.features.0.geometry.coordinates.1 }}'

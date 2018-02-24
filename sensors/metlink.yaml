@@ -1,0 +1,9 @@
+ - platform: metlink
+  stop_number: PARE
+  route_number: KPL
+- platform: metlink
+  stop_number: PORI
+  route_number: KPL
+- platform: metlink
+  stop_number: WELL
+  route_number: KPL

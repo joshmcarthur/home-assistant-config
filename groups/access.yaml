@@ -1,0 +1,5 @@
+access:
+  name: "Access"
+  view: yes
+  entities: 
+    - group.main_garage_door

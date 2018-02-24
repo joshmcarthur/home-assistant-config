@@ -1,0 +1,6 @@
+presence:
+  name: "Who is home?"
+  view: no
+  entities:
+    - device_tracker.josh_main_phone
+    - device_tracker.gemma_main_phone

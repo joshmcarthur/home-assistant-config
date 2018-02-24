@@ -1,0 +1,9 @@
+- alias: 'CO2 notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.netatmo_indoor_co2
+    above: 1000
+  action:
+    service: notify.notify
+    data:
+      message: "CO2 in the lounge is over 1000ppm."

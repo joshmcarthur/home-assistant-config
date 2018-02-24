@@ -1,0 +1,6 @@
+network:
+  view: no
+  name: Network
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload

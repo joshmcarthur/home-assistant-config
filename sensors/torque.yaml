@@ -1,0 +1,3 @@
+- platform: torque
+  email: !secret torque_registration_email
+  name: !secret torque_vehicle_registration

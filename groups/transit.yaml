@@ -1,0 +1,7 @@
+transit:
+  name: Transit
+  view: yes
+  entities:
+    - group.tides
+    - group.public_transit
+    - camera.paremata_roundabout

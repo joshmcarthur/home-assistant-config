@@ -1,0 +1,5 @@
+- platform: rest
+  name: "Flight24 Nearby Flights"
+  resource: !secret flightradar24_data_source_url
+  value_template: 'Attributes'
+  json_attributes: "flights"
