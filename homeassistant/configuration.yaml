@@ -1,0 +1,736 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 76
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Pacific/Auckland
+  customize:
+    sensor.netatmo_indoor_temperature:
+      friendly_name: "Living Room Temperature"
+    sensor.netatmo_indoor_humidity:
+      friendly_name: "Living Room Humidity"
+    sensor.netatmo_outdoor_temperature:
+      friendly_name: "Temperature"
+    sensor.netatmo_outdoor_humidity:
+      friendly_name: "Humidity"
+    sensor.netatmo_indoor_co2:
+      friendly_name: "Indoor CO2"
+    sensor.netatmo_indoor_noise:
+      friendly_name: "Noise Levels"
+    sensor.weather_forecast_wind_speed:
+      friendly_name: "Wind Speed"
+      icon: mdi:weather-windy
+    sensor.weather_station_humidity:
+      icon: mdi:water-percent
+    sensor.weather_station_temperature:
+      icon: mdi:thermometer
+    sensor.roofclimate_1_2:
+      friendly_name: "Roof Humidity"
+      icon: mdi:water-percent
+    sensor.garagebasestation_2_0:
+      icon: mdi:water-percent
+      friendly_name: "Garage Humidity"
+    sensor.studyclimate_3_0:
+      icon: mdi:water-percent
+      friendly_name: "Study Humidity"
+    sensor.studyclimate_3_1:
+      icon: mdi:thermometer
+      friendly_name: "Study Temperature"
+    sensor.roofclimate_1_1:
+      friendly_name: "Roof Temperature"
+      icon: mdi:thermometer
+    sensor.garagebasestation_2_1:
+      icon: mdi:thermometer
+      friendly_name: "Garage Temperature"
+    sensor.sunrise:
+      icon: mdi:weather-sunset-up
+    sensor.sunset:
+      icon: mdi:weather-sunset-down
+    sensor.speedtest_download:
+      icon: mdi:download
+    sensor.speedtest_upload:
+      icon: mdi:upload
+    sensor.power_price:
+      icon: mdi:power-plug
+    sensor.metlink_stop_pare_route_kpl:
+      friendly_name: "Next Paremata Departure"
+      icon: mdi:train
+    sensor.metlink_stop_pori_route_kpl:
+      friendly_name: "Next Porirua Departure"
+      icon: mdi:train
+    sensor.metlink_stop_well_route_kpl:
+      friendly_name: "Next Wellington Departure"
+      icon: mdi:train
+    camera.front_camera:
+      friendly_name: "Outside - Front"
+    camera.garden_camera:
+      friendly_name: "Outside - Garden"
+    camera.paremata_roundabout:
+      friendly_name: "Paremata Intersection SH58 & 1"
+    camera.plimmerton_roundabout:
+      friendly_name: "Plimmerton Roundabout"
+    sensor.geonet_latest_quake_time:
+      friendly_name: Time
+      icon: mdi:clock
+    sensor.geonet_latest_quake_locality:
+      friendly_name: Locality
+      icon: mdi:map-marker
+    sensor.next_recycling_date:
+      friendly_name: "Next Collection"
+      icon: "mdi:calendar"
+    sensor.next_recycling_is_rubbish:
+      friendly_name: "Rubbish?"
+      icon: mdi:delete-empty
+    sensor.next_recycling_is_glass:
+      friendly_name: "Glass?"
+      icon: mdi:bottle-wine
+    sensor.next_recycling_is_mixed:
+      friendly_name: "Plastics/Cans?"
+      icon: "mdi:autorenew"
+    sensor.geonet_latest_quake_magnitude:
+      friendly_name: Magnitude
+    sensor.geonet_latest_quake_depth:
+      friendly_name: Depth
+    camera.geonet_latest_quake_location:
+      friendly_name: "Latest Quake Location"
+    script.toggle_main_garage_door:
+      friendly_name: "Main Garage Door Control"
+      icon: mdi:remote
+    sensor.weather_forecast_temperature_high:
+      friendly_name: "Forecast Temperature (Max)"
+    sensor.weather_forecast_temperature_low:
+      friendly_name: "Forecast Temperature (Min)"
+    sensor.weather_forecast_summary:
+      friendly_name: "Conditions"
+    sensor.hot_tub_3_0:
+      friendly_name: "Tub Intake Temperature"
+    sensor.hot_tub_3_10:
+      friendly_name: "Tub Outlet Temperature"
+    switch.hot_tub_3_20:
+      friendly_name: "Back Garden Lighting"
+    light.gateway_light_7811dcdae6ba:
+      friendly_name: "Hallway Lighting"
+    binary_sensor.door_window_sensor_158d000309bd44:
+      friendly_name: "Back Gate"
+    binary_sensor.smoke_sensor_158d00020b6b36:
+      friendly_name: "Hallway Smoke Detector"
+    binary_sensor.smoke_sensor_158d00020b6b7b:
+      friendly_name: "Laundry Smoke Detector"
+     
+  customize_glob:
+    "sensor.*_water_quality":
+      icon: "mdi:swim"
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: home.joshmcarthur.com:8123
+  ssl_certificate: !secret ssl_certificate_path
+  ssl_key: !secret ssl_key_path
+
+
+# Checks for available updates
+updater:
+
+
+# Discover some devices automatically
+# discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# MQTT config
+mqtt:
+  broker: !secret mqtt_host
+  keepalive: 60
+  client_id: "home-assistant-v2"
+
+# Track the sun
+sun:
+
+group:
+  default_view:
+    view: yes
+    entities:
+      - group.presence
+      - camera.front_camera
+      - camera.garden_camera
+      - camera.portable_camera
+      - camera.portable_camera_2
+      - camera.jillymc_tracker_location
+      - group.climate_summary
+      - group.access_summary
+  climate:
+    name: "Environment"
+    view: yes
+    entities:
+      - group.indoor_climate
+      - group.outside_climate
+      - group.latest_earthquake
+      - group.health
+  climate_summary:
+    name: "Environment Summary"
+    view: no
+    entities:
+      - sensor.weather_forecast_precip_probability
+      - sensor.netatmo_indoor_temperature
+      - sensor.netatmo_outdoor_temperature
+      - sensor.weather_forecast_wind_speed
+      - binary_sensor.protection_window
+  access_summary:
+    name: "Security"
+    view: no
+    entities:
+      - sensor.garage_door_1_status
+      - binary_sensor.door_window_sensor_158d000309bd44
+      - binary_sensor.smoke_sensor_158d00020b6b36
+      - binary_sensor.smoke_sensor_158d00020b6b7b
+  presence:
+    name: "Who is home?"
+    view: no
+    entities:
+      - device_tracker.josh_main_phone
+      - device_tracker.gemma_main_phone
+  indoor_climate:
+    name: Indoor Climate
+    view: no
+    entities:
+      - climate.heatpump_5_10
+      - sensor.netatmo_indoor_temperature
+      - sensor.netatmo_indoor_humidity
+      - sensor.bedroom_temperature
+      - sensor.bedroom_humidity
+      - sensor.garagebasestation_2_1
+      - sensor.garagebasestation_2_0
+      - sensor.roofclimate_1_1
+      - sensor.roofclimate_1_2
+      - sensor.weather_forecast_temperature_high
+      - sensor.weather_forecast_temperature_low
+  utilities:
+    name: Utilities
+    view: yes
+    entities:
+      - group.network
+      - group.power
+      - group.recycling
+      - group.hot_tub
+      - group.fermenter
+      - group.lighting
+  recycling:
+    name: "Recycling"
+    view: no
+    entities:
+      - sensor.next_recycling_date
+      - sensor.next_recycling_is_rubbish
+      - sensor.next_recycling_is_mixed
+      - sensor.next_recycling_is_glass
+  lighting:
+    name: "Lighting"
+    view: no
+    entities:
+      - light.gateway_light_7811dcdae6ba
+      - light.master_bedroom
+      - light.hallway
+      - light.top_of_stairs
+      - automation.holiday_mode
+  fermenter:
+    name: "Fermenter"
+    view: no
+    entities:
+      - sensor.garagebasestation_2_1
+      - switch.beer_switch
+      - automation.fermenter_temperature_balancer_auto_on
+      - automation.fermenter_temperature_balancer_auto_off
+  hot_tub:
+    name: "Hot Tub"
+    view: no
+    entities: 
+      - switch.hot_tub_3_20
+      - sensor.hot_tub_3_0
+      - sensor.hot_tub_3_10
+  main_garage_door:
+    name: "Main Garage Door"
+    view: no
+    entities:
+      - script.toggle_main_garage_door
+      - sensor.garage_door_1_status
+  access:
+    name: "Access"
+    view: yes
+    entities: 
+      - group.main_garage_door
+  power:
+    name: Power
+    view: no
+    entities:
+      - sensor.power_price
+  tides:
+    name: Oceanic Information
+    view: no
+    entities:
+      - sensor.tidespy_3114_high
+      - sensor.tidespy_3114_low
+      - sensor.plimmerton_beach_water_quality
+      - sensor.onepoto_ramp_water_quality
+      - sensor.pauatahanui_inlet_water_quality
+      - sensor.porirua_harbour_water_temperature
+  transit:
+    name: Transit
+    view: yes
+    entities:
+      - group.tides
+      - group.public_transit
+      - camera.paremata_roundabout
+      - camera.plimmerton_roundabout
+  public_transit:
+    view: no
+    name: Public Transport
+    entities:
+      - sensor.metlink_stop_pare_route_kpl
+      - sensor.metlink_stop_pori_route_kpl
+      - sensor.metlink_stop_well_route_kpl
+  latest_earthquake:
+    view: no
+    name: Latest Earthquake
+    entities:
+      - sensor.geonet_latest_quake_locality
+      - sensor.geonet_latest_quake_magnitude
+      - sensor.geonet_latest_quake_depth
+      - sensor.geonet_latest_quake_time
+      - camera.geonet_latest_quake_location
+  network:
+    view: no
+    name: Network
+    entities:
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.breaches_gemcarthur_nz_gmail_com
+      - sensor.breaches_joshua_mcarthur_gmail_com
+      - sensor.breaches_jc_ge_mcarthur_gmail_com
+  outside_climate:
+    name: Outside
+    view: no
+    entities:
+      - sensor.weather_forecast_summary
+      - sensor.netatmo_outdoor_temperature
+      - sensor.netatmo_outdoor_humidity
+      - sensor.weather_station_temperature
+      - sensor.weather_station_humidity
+      - camera.metservice_wellington_rain_radar_image
+      - sensor.current_uv_level
+      - sensor.current_uv_index
+      - sensor.weather_forecast_visibility
+      - sensor.weather_forecast_wind_speed
+      - sensor.weather_station_windspeed
+      - sensor.weather_station_gust_windspeed
+      - sensor.weather_station_wind_direction
+      - sensor.weather_station_rain
+      - sensor.sunrise
+      - sensor.sunset
+  health:
+    name: "Health"
+    view: no
+    entities:
+      - sensor.netatmo_indoor_co2
+      - sensor.netatmo_indoor_noise
+
+device_tracker:
+  - platform: unifi
+    host: !secret unifi_host
+    verify_ssl: false
+    username: !secret unifi_username
+    password: !secret unifi_password
+  - platform: tile
+    username: !secret tile_username
+    password: !secret tile_password
+    show_inactive: true
+
+
+camera:
+  - platform: generic
+    name: paremata_roundabout
+    still_image_url: http://www.trafficnz.info/camera/637.jpg
+  - platform: generic
+    name: plimmerton_roundabout
+    still_image_url: http://www.trafficnz.info/camera/280.jpg
+  - platform: generic
+    name: front_camera
+    still_image_url: !secret front_camera_still_image_url
+  - platform: generic
+    name: garden_camera
+    still_image_url: !secret garden_camera_still_image_url
+  - platform: generic
+    name: portable_camera
+    still_image_url: !secret portable_camera_still_image_url
+  - platform: generic
+    name: portable_camera_2
+    still_image_url: !secret portable_camera_2_still_image_url
+  - platform: generic
+    name: geonet_latest_quake_location
+    still_image_url: !secret static_quake_location_url
+    limit_refetch_to_url_change: true
+  - platform: generic
+    name: metservice_wellington_rain_radar_image
+    still_image_url: "{{ states.sensor.metservice_wellington_rain_radar.state }}"
+    limit_refetch_to_url_change: true
+script:
+  toggle_main_garage_door:
+    sequence:
+      - service: switch.toggle
+        data:
+          entity_id: switch.garagebasestation_2_2
+sensor:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    name: weather_forecast
+    monitored_conditions:
+      - summary
+      - wind_speed
+      - temperature_high
+      - temperature_low
+      - visibility
+      - precip_probability
+  - platform: netatmo
+  - platform: rest
+    name: next_recycling_date
+    resource: !secret pcc_recycling_calendar_url
+    value_template: '{{ value_json.collections[0].date }}'
+    scan_interval: 21600
+  - platform: rest
+    name: next_recycling_is_mixed
+    resource: !secret pcc_recycling_calendar_url
+    value_template: "{% if (value_json.collections[0].rule.mixed) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
+    scan_interval: 21600
+  - platform: rest
+    resource: !secret pcc_recycling_calendar_url
+    name: next_recycling_is_glass
+    value_template: "{% if (value_json.collections[0].rule.glass) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
+    scan_interval: 21600
+  - platform: rest
+    resource: !secret pcc_recycling_calendar_url
+    name: next_recycling_is_rubbish
+    value_template: "{% if (value_json.collections[0].rule.rubbish) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
+    scan_interval: 21600
+  - platform: rest
+    name: "Flight24 Nearby Flights"
+    resource: !secret flightradar24_data_source_url
+    value_template: 'Attributes'
+    json_attributes: "flights"
+  - platform: rest
+    name: "Plimmerton Beach Water Quality"
+    resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%272091%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+    value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'
+    scan_interval: 3600
+  - platform: rest
+    name: "Pauatahanui Inlet Water Quality"
+    scan_interval: 3600
+    resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%272960%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+    value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'
+  - platform: rest
+    name: "Onepoto Ramp Water Quality"
+    scan_interval: 3600
+    resource: http://mapping.gw.govt.nz/arcgis/rest/services/GW/Bathing_Sites_P/MapServer/1/query?where=SiteID+%3D+%271183%27&outFields=SFRG_rating_1213%2C+SamplingDate%2C+Sitename_1%2C+SiteID&returnGeometry=false&f=pjson
+    value_template: '{{ value_json.features[0].attributes.SFRG_rating_1213 }} ({{ value_json.features[0].attributes.SamplingDate }})'
+  - platform: rest
+    name: geonet_latest_quake_time
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    verify_ssl: false
+    value_template: '{{ value_json.features.0.properties.time }}'
+  - platform: rest
+    name: metservice_wellington_rain_radar
+    resource: https://script.google.com/macros/s/AKfycbzC1TU-y6AYTqYjfpLi_L2rSEeisaqRYepP8AH7LXk7ZRn0k09-/exec
+    value_template: '{{ value_json.location }}'
+    scan_interval: 300
+  - platform: rest
+    name: geonet_latest_quake_locality
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    verify_ssl: false
+    value_template: '{{ value_json.features.0.properties.locality }}'
+  - platform: rest
+    name: geonet_latest_quake_depth
+    verify_ssl: false
+    unit_of_measurement: km
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    value_template: '{{ value_json.features.0.properties.depth | round(2) }}'
+  - platform: rest
+    name: geonet_latest_quake_magnitude
+    verify_ssl: false
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    value_template: '{{ value_json.features.0.properties.magnitude | round(1) }}'
+  - platform: rest
+    name: geonet_latest_quake_latitude
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    verify_ssl: false
+    value_template: '{{ value_json.features.0.geometry.coordinates.0 }}'
+  - platform: rest
+    name: geonet_latest_quake_longitude
+    resource: https://api.geonet.org.nz/quake?MMI=4
+    verify_ssl: false
+    value_template: '{{ value_json.features.0.geometry.coordinates.1 }}'
+  - platform: command_line
+    name: porirua_harbour_water_temperature
+    command: "/config/get_porirua_harbour_water_temperature.sh"
+    unit_of_measurement: °C
+    scan_interval: 1800
+  - platform: command_line
+    name: james_cook_whitby_rainfall
+    command: "/config/get_james_cook_whitby_todays_rainfall.sh"
+    value_template: "{{float(value) / 1000 }}"
+    unit_of_measurement: "mL"
+    scan_interval: 900
+  - platform: torque
+    email: !secret torque_registration_email
+    name: !secret torque_vehicle_registration
+  - platform: tidespy
+    api_key: !secret tidespy_api_key
+    place_id: !secret tidespy_place_id
+  - platform: metlink
+    stop_number: PARE
+    route_number: KPL
+  - platform: metlink
+    stop_number: PORI
+    route_number: KPL
+  - platform: metlink
+    stop_number: WELL
+    route_number: KPL
+  - platform: haveibeenpwned
+    name: haveibeenpwned_josh
+    email:
+      - !secret haveibeenpwned_josh_email
+      - !secret haveibeenpwned_gemma_email
+      - !secret haveibeenpwned_shared_email
+  - platform: mqtt_room
+    device_id: 639836956d04
+    name: pebble
+    state_topic: 'room_presence'
+  - platform: mqtt
+    state_topic: "sensors/bedroom/temperature"
+    icon: mdi:thermometer
+    unit_of_measurement: °C
+    force_update: true
+    name: "Bedroom Temperature"
+  - platform: mqtt
+    name: "Weather Station Temperature"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.temperature_C }}'
+    unit_of_measurement: 
+    icon: mdi:thermometer
+    unit_of_measurement: °C
+    force_update: true
+  - platform: mqtt
+    name: "Weather Station Humidity"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.humidity }}'
+    icon: mdi:water-percent
+    unit_of_measurement: "%"
+    force_update: true
+  - platform: mqtt
+    name: "Weather Station Windspeed"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.speed }}'
+    unit_of_measurement: "km/h"
+    icon: mdi:weather-windy
+    force_update: true
+  - platform: mqtt
+    name: "Weather Station Gust Windspeed"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.gust }}'
+    icon: mdi:weather-windy
+    unit_of_measurement: "km/h"
+    force_update: true
+  - platform: mqtt
+    name: "Weather Station Rain"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.rain }}'
+    unit_of_measurement: "mm"
+    force_update: true
+  - platform: mqtt
+    name: "Weather Station Wind Direction"
+    state_topic: 'weather_station'
+    value_template: '{{ value_json.direction_str }} ({{ value_json.direction_deg }}°)'
+    force_update: true
+  - platform: mqtt
+    state_topic: "sensors/bedroom/humidity"
+    icon: mdi:water-percent
+    unit_of_measurement: "%"
+    force_update: true
+    name: "Bedroom Humidity"
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+  - platform: template
+    sensors:
+      power_price:
+         friendly_name: "Current Variable Power Rate"
+         unit_of_measurement: "c"
+         value_template: >-
+             {% set t = strptime(states('sensor.time'), '%H:%M') %}
+             {%- if t.hour <7 or t.hour >=21 -%}15.72
+             {%- else -%}29.21
+             {%- endif -%}
+      garage_door_1_status: 
+         friendly_name: "Main Garage Door Status"
+         value_template: '{% if is_state("switch.garagebasestation_2_3", "on") -%}Open{% else -%}Closed{%- endif %}'
+         icon_template: '{% if is_state("switch.garagebasestation_2_3", "on") -%}mdi:garage-open{% else -%}mdi:garage{%- endif %}'
+      sunrise:
+         friendly_name: Sunrise
+         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_rising)) | timestamp_local)[11:16] }}'
+      sunset:
+         friendly_name: Sunset
+         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
+
+notify:
+  - platform: html5
+    gcm_api_key: !secret notify_gcm_api_key
+    gcm_sender_id: !secret gcm_sender_id
+
+mysensors:
+  gateways:
+    - device: mqtt
+      persistence_file: '/config/mysensors.json'
+      topic_in_prefix: 'mysensors-out'
+      topic_out_prefix: 'mysensors-in'
+  optimistic: true
+  retain: true
+  persistence: true
+  version: "2.0"
+
+netatmo:
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
+  password: !secret netatmo_password
+
+automation:
+  - alias: "fermenter_temperature_balancer_auto_on"
+    action:
+      service: switch.turn_on
+      entity_id: switch.beer_switch
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.garagebasestation_2_1
+      below: 18
+  - alias: "fermenter_temperature_balancer_auto_off"
+    action:
+      service: switch.turn_off
+      entity_id: switch.beer_switch
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.garagebasestation_2_1
+      above: 18
+  - alias: "Holiday Mode"
+    trigger:
+      platform: time
+      at: '17:00:00'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id:
+            - light.hallway
+            - light.top_of_stairs
+          brightness_pct: 100
+      - delay: '05:00'
+      - service: light.turn_on
+        data:
+          entity_id:
+            - light.hallway
+            - light.top_of_stairs
+          brightness_pct: 10
+      - delay: '10:00'
+      - service: light.turn_off
+        data:
+          entity_id:
+            - light.hallway
+            - light.top_of_stairs
+  - alias: 'Night lighting'
+    trigger:
+      platform: time
+      at: '21:00:00'
+    action:
+      service: light.turn_on
+      entity_id: light.gateway_light_7811dcdae6ba
+      data:
+        brightness_pct: 10
+        color_name: "orange"
+  - alias: 'Night lighting - off'
+    trigger:
+      platform: sun
+      event: sunrise
+      offset: '+00:00:00'
+    action:
+      service: light.turn_off
+      entity_id: light.gateway_light_7811dcdae6ba
+  - alias: 'CO2 notification'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.netatmo_indoor_co2
+      above: 1000
+    action:
+      service: notify.notify
+      data:
+        message: "CO2 in the lounge is over 1000ppm."
+  - alias: 'Garage Door - Open Notification'
+    trigger: 
+      platform: state
+      entity_id: switch.garagebasestation_2_2
+      from: 'on'
+      to: 'off'
+    action:
+      service: notify.notify
+      data:
+        message: "Garage door was triggered"
+  - alias: 'Garage Door - Closed Notification'
+    trigger: 
+      platform: state
+      entity_id: switch.garagebasestation_2_2
+      from: 'off'
+      to: 'on'
+    action:
+      service: notify.notify
+      data:
+        message: "Garage door was triggered"
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - host: 192.168.1.204
+      mac: !secret xiaomi_mihome_mac
+      key: !secret xiaomi_mihome_key
+
+wemo:
+  static:
+    - 192.168.1.206
+    - 192.168.1.209
+
+google_assistant:
+  project_id: !secret google_assistant_project_id
+  api_key: !secret google_assistant_api_key
+  expose_by_default: true
+ 
+speedtestdotnet:
+  scan_interval:
+    minutes: 30
+  monitored_conditions:
+    - upload
+    - download
+  
+
+openuv:
+  api_key: !secret openuv_api_key
