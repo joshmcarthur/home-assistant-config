@@ -2,7 +2,7 @@
 
 set -ev
 
-cd ../homeassistant
+cd homeassistant
 
 docker build . -t config_checker
 
