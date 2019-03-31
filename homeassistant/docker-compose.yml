@@ -1,0 +1,14 @@
+version: "3"
+services:
+  home_assistant:
+    build: .
+    container_name: home_assistant
+    restart: always
+    tty: true
+    ports:
+      - 8123:8123
+    volumes:
+      - .:/config
+      - ./google2ef72f799271da64.html:/usr/local/lib/python3.4/dist-packages/homeassistant/components/frontend/www_static/google2ef72f799271da64.html
+      - /etc/localtime:/etc/localtime:ro
+      - /home/josh/home-assistant-lets-encrypt/etc/letsencrypt:/etc/letsencrypt:ro
