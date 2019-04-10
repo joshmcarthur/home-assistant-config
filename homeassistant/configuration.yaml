@@ -298,14 +298,6 @@ group:
       - light.hallway
       - light.top_of_stairs
       - automation.holiday_mode
-  fermenter:
-    name: "Fermenter"
-    view: no
-    entities:
-      - sensor.garagebasestation_2_1
-      - switch.beer_switch
-      - automation.fermenter_temperature_balancer_auto_on
-      - automation.fermenter_temperature_balancer_auto_off
   hot_tub:
     name: "Hot Tub"
     view: no
