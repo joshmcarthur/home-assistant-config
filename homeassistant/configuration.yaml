@@ -122,6 +122,8 @@ homeassistant:
       friendly_name: "Hallway Smoke Detector"
     binary_sensor.smoke_sensor_158d00020b6b7b:
       friendly_name: "Laundry Smoke Detector"
+    binary_sensor.fireplace_active:
+      friendly_name: "Fireplace Fire Status"
      
   customize_glob:
     "sensor.*_water_quality":
@@ -350,6 +352,7 @@ group:
     entities:
       - sensor.netatmo_indoor_co2
       - sensor.netatmo_indoor_noise
+      - binary_sensor.fireplace_active
 
 device_tracker:
   - platform: unifi
@@ -596,6 +599,12 @@ sensor:
       sunset:
          friendly_name: Sunset
          value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
+
+binary_sensor:
+  - platform: mqtt
+    name: "fireplace_active"
+    device_class: "heat"
+    state_topic: "home/fireplace/active"
 
 notify:
   - platform: html5
