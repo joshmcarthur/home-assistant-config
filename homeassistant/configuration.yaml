@@ -760,6 +760,11 @@ speedtestdotnet:
   monitored_conditions:
     - upload
     - download
+
+cast:
+  media_player:
+    - host: 192.168.1.37
+    - host: 192.168.1.205
   
 
 openuv:
