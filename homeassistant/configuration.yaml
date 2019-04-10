@@ -26,6 +26,8 @@ homeassistant:
     sensor.weather_forecast_wind_speed:
       friendly_name: "Wind Speed"
       icon: mdi:weather-windy
+    sensor.weather_forecast_precip_probability:
+      friendly_name: "Chance of Rain"
     sensor.weather_station_humidity:
       icon: mdi:water-percent
     sensor.weather_station_temperature:
@@ -169,6 +171,7 @@ sun:
 
 group:
   default_view:
+    name: "Overview"
     view: yes
     entities:
       - group.presence
@@ -176,17 +179,73 @@ group:
       - camera.garden_camera
       - camera.portable_camera
       - camera.portable_camera_2
-      - camera.jillymc_tracker_location
       - group.climate_summary
       - group.access_summary
-  climate:
-    name: "Environment"
+  inside:
+    name: "Inside"
     view: yes
     entities:
-      - group.indoor_climate
-      - group.outside_climate
-      - group.latest_earthquake
+      - group.indoor_temperatures
+      - group.indoor_humidities
       - group.health
+  outside:
+    name: "Outside"
+    view: yes
+    entities:
+      - group.outdoor_temperatures
+      - group.outdoor_humidities
+      - group.sun_and_uv
+      - group.weather
+      - group.garden
+  garden:
+    name: "Garden & Soil"
+    entities:
+      - sensor.veggie_temperature
+      - sensor.veggie_moisture
+      - sensor.veggie_light
+      - sensor.veggie_conductivity
+  outdoor_temperatures:
+    name: "Temperature"
+    entities:
+      - sensor.netatmo_outdoor_temperature
+      - sensor.weather_station_temperature
+  outdoor_humidities:
+    name: "Humidity"
+    entities:
+      - sensor.netatmo_outdoor_humidity
+      - sensor.weather_station_humidity
+  sun_and_uv:
+    name: "Sunshine"
+    entities:
+      - sensor.sunrise
+      - sensor.sunset
+      - sensor.current_uv_level
+      - sensor.current_uv_index
+  weather:
+    name: "Weather"
+    entities:
+      - sensor.weather_forecast_summary
+      - camera.metservice_wellington_rain_radar_image
+      - sensor.weather_forecast_visibility
+      - sensor.weather_forecast_wind_speed
+      - sensor.weather_station_windspeed
+      - sensor.weather_station_gust_windspeed
+      - sensor.weather_station_wind_direction
+      - sensor.weather_station_rain
+  indoor_temperatures:
+    name: "Temperature"
+    entities:
+      - sensor.netatmo_indoor_temperature
+      - sensor.bedroom_temperature
+      - sensor.garagebasestation_2_1
+      - sensor.roofclimate_1_1
+  indoor_humidities:
+    name: "Humidity"
+    entities:
+      - sensor.netatmo_indoor_humidity
+      - sensor.bedroom_humidity
+      - sensor.garagebasestation_2_0
+      - sensor.roofclimate_1_2
   climate_summary:
     name: "Environment Summary"
     view: no
@@ -210,26 +269,12 @@ group:
     entities:
       - device_tracker.josh_main_phone
       - device_tracker.gemma_main_phone
-  indoor_climate:
-    name: Indoor Climate
-    view: no
-    entities:
-      - climate.heatpump_5_10
-      - sensor.netatmo_indoor_temperature
-      - sensor.netatmo_indoor_humidity
-      - sensor.bedroom_temperature
-      - sensor.bedroom_humidity
-      - sensor.garagebasestation_2_1
-      - sensor.garagebasestation_2_0
-      - sensor.roofclimate_1_1
-      - sensor.roofclimate_1_2
-      - sensor.weather_forecast_temperature_high
-      - sensor.weather_forecast_temperature_low
   utilities:
     name: Utilities
     view: yes
     entities:
       - group.network
+      - climate.heatpump_5_10
       - group.power
       - group.recycling
       - group.hot_tub
@@ -274,17 +319,19 @@ group:
       - script.toggle_main_garage_door
       - sensor.garage_door_1_status
   access:
-    name: "Access"
+    name: "Access & Safety"
     view: yes
     entities: 
       - group.main_garage_door
+      - group.access_summary
+      - group.latest_earthquake
   power:
     name: Power
     view: no
     entities:
       - sensor.power_price
   tides:
-    name: Oceanic Information
+    name: Oceanic 
     view: no
     entities:
       - sensor.tidespy_3114_high
@@ -326,26 +373,6 @@ group:
       - sensor.breaches_gemcarthur_nz_gmail_com
       - sensor.breaches_joshua_mcarthur_gmail_com
       - sensor.breaches_jc_ge_mcarthur_gmail_com
-  outside_climate:
-    name: Outside
-    view: no
-    entities:
-      - sensor.weather_forecast_summary
-      - sensor.netatmo_outdoor_temperature
-      - sensor.netatmo_outdoor_humidity
-      - sensor.weather_station_temperature
-      - sensor.weather_station_humidity
-      - camera.metservice_wellington_rain_radar_image
-      - sensor.current_uv_level
-      - sensor.current_uv_index
-      - sensor.weather_forecast_visibility
-      - sensor.weather_forecast_wind_speed
-      - sensor.weather_station_windspeed
-      - sensor.weather_station_gust_windspeed
-      - sensor.weather_station_wind_direction
-      - sensor.weather_station_rain
-      - sensor.sunrise
-      - sensor.sunset
   health:
     name: "Health"
     view: no
