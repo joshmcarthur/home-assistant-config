@@ -160,6 +160,7 @@ mqtt:
   broker: !secret mqtt_host
   keepalive: 60
   client_id: "home-assistant-v2"
+  discovery: true
 
 # Track the sun
 sun:
