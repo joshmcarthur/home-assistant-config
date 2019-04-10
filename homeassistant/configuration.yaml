@@ -553,6 +553,7 @@ sensor:
     name: "Weather Station Temperature"
     state_topic: 'weather_station'
     value_template: '{{ value_json.temperature_C }}'
+    unit_of_measurement: 
     icon: mdi:thermometer
     unit_of_measurement: °C
     force_update: true
