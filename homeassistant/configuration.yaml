@@ -263,6 +263,7 @@ group:
       - binary_sensor.door_window_sensor_158d000309bd44
       - binary_sensor.smoke_sensor_158d00020b6b36
       - binary_sensor.smoke_sensor_158d00020b6b7b
+      - binary_sensor.water_leak_sensor_158d000245c7e4
   presence:
     name: "Who is home?"
     view: no
