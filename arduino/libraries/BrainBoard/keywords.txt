@@ -1,0 +1,11 @@
+BrainBoard	KEYWORD1
+tempRead	KEYWORD2
+vrRead		KEYWORD2
+motorWrite	KEYWORD2
+beep		KEYWORD2
+lightRead	KEYWORD2
+frontLeds	KEYWORD2
+leftLeds	KEYWORD2
+rightLeds	KEYWORD2
+SelfTest	KEYWORD2
+QuickSelfTest	KEYWORD2

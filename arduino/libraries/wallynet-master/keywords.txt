@@ -1,0 +1,4 @@
+WallyNet	KEYWORD1
+
+wallynet_send_beacon	KEYWORD1
+wallynet_setup	KEYWORD1

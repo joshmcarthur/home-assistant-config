@@ -1,0 +1,35 @@
+
+//TODO: put this in progmem
+1.  Maximum voltage on any pin is 5V.\n\
+2.  Power BrainBoard with 5-9V DC (centre +ve) using the barrel socket or JP10. Note the '+' on JP10. Connecting reversed power will probably let out all the smoke and void your warranty.\n\
+3.  Make sure you have external power (from barrel socket or JP10) before turning on motors in your code so you don't overload your USB port.\n\
+4.  There's a handy Arduino Nano pin reference at http://forum.arduino.cc/index.php?topic=147582.0 -- the board layout is different but the pin functions (and chip) are the same.\n\
+5.  Some useful pin definitions follow.\n\
+\n\
+// Digital inputs\n\
+SW1_PIN       20  // left push button, active high\n\
+SW2_PIN       3   // right push button, active high\n\
+\n\
+// Digital outputs\n\
+RIGHT_LEDS    8   // RHS blue leds\n\
+BUZZER        9   // use tone() to drive the BUZZER.\n\
+MOTOR1_A      4   // motor 1 (left) drive pin 1\n\
+MOTOR1_B      5   // motor 1 (left) drive pin 2, PWM capable with analogWrite()\n\
+MOTOR2_A      6   // motor 2 (right) drive pin 1, PWM capable with analogWrite()\n\
+MOTOR2_B      7   // motor 2 (right) drive pin 2\n\
+\n\
+// Digital input/output\n\
+D10           10  // digital 10\n\
+D11           11  // digital 11\n\
+FRONT_LEDS    12  // white leds, also connected to ISP header\n\
+LEFT_LEDS     13  // LHS blue leds, also connected to ISP header\n\
+\n\
+// Analog inputs & sensors\n\
+TEMP_SENSOR   A0  // mcp9700 temperature sensor\n\
+LDR           A1  // light-dependent resistor / light sensor\n\
+ANALOG2       A2  // analog input 2, available as digital I/O\n\
+ANALOG3       A3  // analog input 3, use jumper to connect to variable resistor. available as digital I/O when not connected to vr.\n\
+ANALOG4       A4  // analog input 4, also I2C SDA and digital I/O\n\
+ANALOG5       A4  // analog input 5, also I2C SCL and digital I/O\n\
+ANALOG6       A6  // analog input 6\n\
+ANALOG7       A7  // analog input 7\n\
