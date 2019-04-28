@@ -267,6 +267,7 @@ group:
       - binary_sensor.smoke_sensor_158d00020b6b36
       - binary_sensor.smoke_sensor_158d00020b6b7b
       - binary_sensor.water_leak_sensor_158d000245c7e4
+      - sensor.cat_door_last_triggered
   presence:
     name: "Who is home?"
     view: no
@@ -623,6 +624,10 @@ sensor:
       sunset:
          friendly_name: Sunset
          value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
+      cat_door_last_triggered:
+         friendly_name: "Cat Door Entered/Exited"
+         value_template: '{{relative_time(states.binary_sensor.vibration_158d0002b61519.last_updated)}} ago'
+         icon_template: 'mdi:paw'
 
 binary_sensor:
   - platform: mqtt
