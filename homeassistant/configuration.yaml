@@ -126,6 +126,9 @@ homeassistant:
       friendly_name: "Laundry Smoke Detector"
     binary_sensor.fireplace_active:
       friendly_name: "Fireplace Fire Status"
+    binary_sensor.water_leak_sensor_158d000245c7e4:
+      friendly_name: "Under the House"
+
      
   customize_glob:
     "sensor.*_water_quality":
