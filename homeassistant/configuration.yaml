@@ -32,10 +32,10 @@ homeassistant:
       icon: mdi:water-percent
     sensor.weather_station_temperature:
       icon: mdi:thermometer
-    sensor.roofclimate_1_2:
+    sensor.sensor_0010_dht11_humidity:
       friendly_name: "Roof Humidity"
       icon: mdi:water-percent
-    sensor.garagebasestation_2_0:
+    sensor.garage_dht11_humidity:
       icon: mdi:water-percent
       friendly_name: "Garage Humidity"
     sensor.studyclimate_3_0:
@@ -44,10 +44,10 @@ homeassistant:
     sensor.studyclimate_3_1:
       icon: mdi:thermometer
       friendly_name: "Study Temperature"
-    sensor.roofclimate_1_1:
+    sensor.sensor_0010_dht11_temperature:
       friendly_name: "Roof Temperature"
       icon: mdi:thermometer
-    sensor.garagebasestation_2_1:
+    sensor.garage_dht11_temperature:
       icon: mdi:thermometer
       friendly_name: "Garage Temperature"
     sensor.sunrise:
@@ -137,6 +137,11 @@ homeassistant:
 # Enables the frontend
 frontend:
 
+# Store state changes in a Postgres database
+recorder:
+  db_url: "postgres://postgres@database"
+  purge_interval: 0
+
 http:
   # Uncomment this to add a password (recommended!)
   # api_password: !secret http_password
@@ -212,6 +217,7 @@ group:
     entities:
       - sensor.netatmo_outdoor_temperature
       - sensor.weather_station_temperature
+      - sensor.garage_ds18b20_temperature
   outdoor_humidities:
     name: "Humidity"
     entities:
@@ -240,15 +246,15 @@ group:
     entities:
       - sensor.netatmo_indoor_temperature
       - sensor.bedroom_temperature
-      - sensor.garagebasestation_2_1
-      - sensor.roofclimate_1_1
+      - sensor.garage_dht11_temperature
+      - sensor.sensor_0010_dht11_temperature
   indoor_humidities:
     name: "Humidity"
     entities:
       - sensor.netatmo_indoor_humidity
       - sensor.bedroom_humidity
-      - sensor.garagebasestation_2_0
-      - sensor.roofclimate_1_2
+      - sensor.garage_dht11_humidity
+      - sensor.sensor_0010_dht11_humidity
   climate_summary:
     name: "Environment Summary"
     view: no
@@ -301,6 +307,8 @@ group:
       - light.master_bedroom
       - light.hallway
       - light.top_of_stairs
+      - switch.sonoff
+      - switch.sonoff2
       - automation.holiday_mode
   hot_tub:
     name: "Hot Tub"
@@ -313,7 +321,7 @@ group:
     name: "Main Garage Door"
     view: no
     entities:
-      - script.toggle_main_garage_door
+      - switch.garage
       - sensor.garage_door_1_status
   access:
     name: "Access & Safety"
@@ -417,12 +425,6 @@ camera:
     name: metservice_wellington_rain_radar_image
     still_image_url: "{{ states.sensor.metservice_wellington_rain_radar.state }}"
     limit_refetch_to_url_change: true
-script:
-  toggle_main_garage_door:
-    sequence:
-      - service: switch.toggle
-        data:
-          entity_id: switch.garagebasestation_2_2
 sensor:
   - platform: darksky
     api_key: !secret darksky_api_key
@@ -437,28 +439,28 @@ sensor:
   - platform: netatmo
   - platform: rest
     name: next_recycling_date
-    resource: !secret pcc_recycling_calendar_url
+    resource: https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/?p=1352490
     value_template: '{{ value_json.collections[0].date }}'
     scan_interval: 21600
   - platform: rest
     name: next_recycling_is_mixed
-    resource: !secret pcc_recycling_calendar_url
+    resource: https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/?p=1352490
     value_template: "{% if (value_json.collections[0].rule.mixed) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
     scan_interval: 21600
   - platform: rest
-    resource: !secret pcc_recycling_calendar_url
+    resource: https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/?p=1352490
     name: next_recycling_is_glass
     value_template: "{% if (value_json.collections[0].rule.glass) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
     scan_interval: 21600
   - platform: rest
-    resource: !secret pcc_recycling_calendar_url
+    resource: https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/?p=1352490
     name: next_recycling_is_rubbish
     value_template: "{% if (value_json.collections[0].rule.rubbish) %}{{'Yes'}}{%else%}{{'No'}}{%endif%}"
     scan_interval: 21600
   - platform: rest
     name: "Flight24 Nearby Flights"
     resource: !secret flightradar24_data_source_url
-    value_template: 'Attributes'
+    value_template: "Attributes"
     json_attributes: "flights"
   - platform: rest
     name: "Plimmerton Beach Water Quality"
@@ -626,7 +628,8 @@ sensor:
          value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
       cat_door_last_triggered:
          friendly_name: "Cat Door Entered/Exited"
-         value_template: '{{relative_time(states.binary_sensor.vibration_158d0002b61519.last_updated)}} ago'
+         entity_id: binary_sensor.vibration_158d0002b61519
+         value_template: '{{ relative_time(states.binary_sensor.vibration_158d0002b61519.last_changed) }}'
          icon_template: 'mdi:paw'
 
 binary_sensor:
@@ -637,8 +640,8 @@ binary_sensor:
 
 notify:
   - platform: html5
-    gcm_api_key: !secret notify_gcm_api_key
-    gcm_sender_id: !secret gcm_sender_id
+    gcm_api_key: 'AAAAFaxzxcE:APA91bE0cGpRZTdzlVfxinJkhsG9SQ2zZ_WdWs7pDQWXEjz3SqXYzraLQ1qBwSVMwwmwl42Jkf3bxTpRVSq5N3s8tmDrjLraTYLy8hbfty2-oEsG0QIDv9RaeINrfoxT9qcF7DlWzjmd'
+    gcm_sender_id: '93087581633'
 
 mysensors:
   gateways:
@@ -773,7 +776,14 @@ cast:
   media_player:
     - host: 192.168.1.37
     - host: 192.168.1.205
-  
+
+switch:
+  - platform: mqtt
+    name: garage_lights_1
+    command_topic: "stat/garage-lights/POWER1"
+  - platform: mqtt
+    name: garage_lights_2
+    command_topic: "stat/garage-lights/POWER2"
 
 openuv:
   api_key: !secret openuv_api_key
