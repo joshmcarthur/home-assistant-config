@@ -128,8 +128,10 @@ homeassistant:
       friendly_name: "Fireplace Fire Status"
     binary_sensor.water_leak_sensor_158d000245c7e4:
       friendly_name: "Under the House"
-
-     
+    switch.garage:
+      friendly_name: "Leaf Garage Door"
+    switch.sonoff2_2:
+      friendly_name: "Outback Garage Door"
   customize_glob:
     "sensor.*_water_quality":
       icon: "mdi:swim"
@@ -317,17 +319,18 @@ group:
       - switch.hot_tub_3_20
       - sensor.hot_tub_3_0
       - sensor.hot_tub_3_10
-  main_garage_door:
-    name: "Main Garage Door"
+  garage_door:
+    name: "Garage Door"
     view: no
     entities:
       - switch.garage
+      - switch.sonoff2_2
       - sensor.garage_door_1_status
   access:
     name: "Access & Safety"
     view: yes
     entities: 
-      - group.main_garage_door
+      - group.garage_door
       - group.access_summary
       - group.latest_earthquake
   power:
