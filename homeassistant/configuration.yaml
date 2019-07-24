@@ -641,6 +641,27 @@ binary_sensor:
     device_class: "heat"
     state_topic: "home/fireplace/active"
 
+climate:
+  - platform: generic_thermostat
+    name: Living Room
+    heater: input_boolean.fake_heater
+    target_sensor: sensor.netatmo_indoor_temperature
+    initial_operation_mode: "off"
+    target_temp: 21
+  - platform: generic_thermostat
+    name: Outside
+    heater: input_boolean.fake_heater
+    target_sensor: sensor.netatmo_outdoor_temperature
+    initial_operation_mode: "off"
+    target_temp: 21
+
+# Used to associate fake thermometers to so that temperatures show in Google Assistant
+input_boolean:
+  fake_heater:
+    name: Fake Heater
+    icon: mdi:toggle-switch-off
+    initial: off 
+
 notify:
   - platform: html5
     gcm_api_key: 'AAAAFaxzxcE:APA91bE0cGpRZTdzlVfxinJkhsG9SQ2zZ_WdWs7pDQWXEjz3SqXYzraLQ1qBwSVMwwmwl42Jkf3bxTpRVSq5N3s8tmDrjLraTYLy8hbfty2-oEsG0QIDv9RaeINrfoxT9qcF7DlWzjmd'
