@@ -1,0 +1,36 @@
+esphome:
+  name: bedroom
+  platform: ESP8266
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: dht
+    pin: GPIO14
+    model: DHT11
+    temperature:
+      name: "Bedroom Temperature"
+    humidity:
+      name: "Bedroom Humidity"
+    update_interval: 60s
+time:
+  - platform: sntp
+    id: my_time
+    
+i2c:
+  sda: GPIO5
+  scl: GPIO4
+
+display:
+  - platform: lcd_pcf8574
+    dimensions: 16x2
+    address: 0x3f
+    lambda: |-
+      it.strftime("%H:%M, %d/%m/%Y", id(my_time).now());
