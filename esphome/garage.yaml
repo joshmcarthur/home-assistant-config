@@ -1,0 +1,53 @@
+esphome:
+  name: garage
+  platform: ESP8266
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# Dallas temperature to read ground temp
+dallas:
+  - pin: GPIO0
+
+sensor:
+  - platform: dallas
+    index: 0
+    name: "Ground Temperature"  
+  - platform: dht
+    model: DHT11
+    pin: GPIO4
+    temperature:
+      name: "Garage Temperature"
+    humidity:
+      name: "Garage Humidity"
+    update_interval: 60s
+
+switch:
+  - platform: gpio
+    pin: GPIO5
+    id: garage_door_right_relay
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin: GPIO16
+    id: garage_door_left_relay
+    restore_mode: ALWAYS_OFF
+  - platform: template
+    name: "Leaf Garage Door"
+    icon: "mdi:gate"
+    turn_on_action:
+    - switch.turn_on: garage_door_left_relay
+    - delay: 500ms
+    - switch.turn_off: garage_door_left_relay
+  - platform: template
+    name: "Outback Garage Door"
+    icon: "mdi:gate"
+    turn_on_action:
+    - switch.turn_on: garage_door_right_relay
+    - delay: 500ms
+    - switch.turn_off: garage_door_right_relay

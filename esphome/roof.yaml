@@ -1,0 +1,23 @@
+esphome:
+  name: roof
+  platform: ESP8266
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: dht
+    pin: GPIO2
+    model: DHT22
+    temperature:
+      name: "Roof Space Temperature"
+    humidity:
+      name: "Roof Space Humidity"
+    update_interval: 60s
+
