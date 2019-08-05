@@ -543,7 +543,6 @@ sensor:
     stop_number: WELL
     route_number: KPL
   - platform: haveibeenpwned
-    name: haveibeenpwned_josh
     email:
       - !secret haveibeenpwned_josh_email
       - !secret haveibeenpwned_gemma_email
@@ -562,7 +561,6 @@ sensor:
     name: "Weather Station Temperature"
     state_topic: 'weather_station'
     value_template: '{{ value_json.temperature_C }}'
-    unit_of_measurement: 
     icon: mdi:thermometer
     unit_of_measurement: °C
     force_update: true
@@ -646,13 +644,13 @@ climate:
     name: Living Room
     heater: input_boolean.fake_heater
     target_sensor: sensor.netatmo_indoor_temperature
-    initial_operation_mode: "off"
+    initial_hvac_mode: "off"
     target_temp: 21
   - platform: generic_thermostat
     name: Outside
     heater: input_boolean.fake_heater
     target_sensor: sensor.netatmo_outdoor_temperature
-    initial_operation_mode: "off"
+    initial_hvac_mode: "off"
     target_temp: 21
 
 # Used to associate fake thermometers to so that temperatures show in Google Assistant
