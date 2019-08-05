@@ -415,17 +415,18 @@ camera:
   - platform: generic
     name: remutaka_hill
     still_image_url: "{{ states.sensor.metservice_remutaka_hill_camera_latest_url.state }}"
+  - platform: mjpeg
     name: front_camera
-    still_image_url: !secret front_camera_still_image_url
-  - platform: generic
+    mjpeg_url: !secret front_camera_stream_url
+  - platform: mjpeg
     name: garden_camera
-    still_image_url: !secret garden_camera_still_image_url
-  - platform: generic
+    mjpeg_url: !secret garden_camera_stream_url
+  - platform: mjpeg
     name: portable_camera
-    still_image_url: !secret portable_camera_still_image_url
-  - platform: generic
-    name: portable_camera_2
-    still_image_url: !secret portable_camera_2_still_image_url
+    mjpeg_url: !secret portable_camera_stream_url
+  - platform: mjpeg
+    name: garage
+    mjpeg_url: !secret garage_camera_stream_url
   - platform: generic
     name: geonet_latest_quake_location
     still_image_url: !secret static_quake_location_url
