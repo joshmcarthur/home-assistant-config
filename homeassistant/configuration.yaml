@@ -198,6 +198,7 @@ group:
       - group.indoor_temperatures
       - group.indoor_humidities
       - group.health
+      - group.media
   outside:
     name: "Outside"
     view: yes
@@ -385,7 +386,12 @@ group:
       - sensor.netatmo_indoor_co2
       - sensor.netatmo_indoor_noise
       - binary_sensor.fireplace_active
-
+  media:
+    name: "Media"
+    view: no
+    entities:
+      - media_player.aerlion
+      - media_player.stringbag
 device_tracker:
   - platform: unifi
     host: !secret unifi_host
@@ -779,11 +785,6 @@ speedtestdotnet:
     - upload
     - download
 
-cast:
-  media_player:
-    - host: 192.168.1.37
-    - host: 192.168.1.205
-
 switch:
   - platform: mqtt
     name: garage_lights_1
@@ -797,3 +798,4 @@ openuv:
 
 esphome:
 config:
+cast:
