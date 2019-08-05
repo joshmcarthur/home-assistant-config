@@ -415,6 +415,7 @@ camera:
   - platform: generic
     name: remutaka_hill
     still_image_url: "{{ states.sensor.metservice_remutaka_hill_camera_latest_url.state }}"
+    limit_refetch_to_url_change: true
   - platform: mjpeg
     name: front_camera
     mjpeg_url: !secret front_camera_stream_url
@@ -532,6 +533,7 @@ sensor:
     name: metservice_remutaka_hill_camera_latest_url
     resource: https://www.metservice.com/publicData/trafficWebcam_Rimutaka_Hill
     value_template: 'https://metservice.com{{ value_json.0.url }}'
+    scan_interval: 300
   - platform: command_line
     name: james_cook_whitby_rainfall
     command: "/config/get_james_cook_whitby_todays_rainfall.sh"
@@ -803,7 +805,7 @@ switch:
 
 openuv:
   api_key: !secret openuv_api_key
-
+ 
 esphome:
 config:
 cast:
