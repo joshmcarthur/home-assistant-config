@@ -806,3 +806,4 @@ openuv:
 esphome:
 config:
 cast:
+system_health:
