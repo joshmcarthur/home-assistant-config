@@ -354,6 +354,7 @@ group:
       - group.public_transit
       - camera.paremata_roundabout
       - camera.plimmerton_roundabout
+      - camera.remutaka_hill
   public_transit:
     view: no
     name: Public Transport
@@ -412,6 +413,8 @@ camera:
     name: plimmerton_roundabout
     still_image_url: http://www.trafficnz.info/camera/280.jpg
   - platform: generic
+    name: remutaka_hill
+    still_image_url: "{{ states.sensor.metservice_remutaka_hill_camera_latest_url.state }}"
     name: front_camera
     still_image_url: !secret front_camera_still_image_url
   - platform: generic
@@ -524,6 +527,10 @@ sensor:
     command: "/config/get_porirua_harbour_water_temperature.sh"
     unit_of_measurement: °C
     scan_interval: 1800
+  - platform: rest
+    name: metservice_remutaka_hill_camera_latest_url
+    resource: https://www.metservice.com/publicData/trafficWebcam_Rimutaka_Hill
+    value_template: 'https://metservice.com{{ value_json.0.url }}'
   - platform: command_line
     name: james_cook_whitby_rainfall
     command: "/config/get_james_cook_whitby_todays_rainfall.sh"
