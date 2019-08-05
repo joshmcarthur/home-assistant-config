@@ -188,7 +188,7 @@ group:
       - camera.front_camera
       - camera.garden_camera
       - camera.portable_camera
-      - camera.portable_camera_2
+      - camera.garage
       - group.climate_summary
       - group.access_summary
   inside:
@@ -219,7 +219,7 @@ group:
     entities:
       - sensor.netatmo_outdoor_temperature
       - sensor.weather_station_temperature
-      - sensor.garage_ds18b20_temperature
+      - sensor.ground_temperature
   outdoor_humidities:
     name: "Humidity"
     entities:
@@ -247,16 +247,14 @@ group:
     name: "Temperature"
     entities:
       - sensor.netatmo_indoor_temperature
-      - sensor.bedroom_temperature
-      - sensor.garage_dht11_temperature
-      - sensor.sensor_0010_dht11_temperature
+      - sensor.bedroom_temperature_2
+      - sensor.garage_temperature
   indoor_humidities:
     name: "Humidity"
     entities:
       - sensor.netatmo_indoor_humidity
-      - sensor.bedroom_humidity
-      - sensor.garage_dht11_humidity
-      - sensor.sensor_0010_dht11_humidity
+      - sensor.bedroom_humidity_2
+      - sensor.garage_humidity
   climate_summary:
     name: "Environment Summary"
     view: no
@@ -323,9 +321,8 @@ group:
     name: "Garage Door"
     view: no
     entities:
-      - switch.garage
-      - switch.sonoff2_2
-      - sensor.garage_door_1_status
+      - switch.leaf_garage_door
+      - switch.outback_garage_door
   access:
     name: "Access & Safety"
     view: yes
@@ -552,12 +549,6 @@ sensor:
     name: pebble
     state_topic: 'room_presence'
   - platform: mqtt
-    state_topic: "sensors/bedroom/temperature"
-    icon: mdi:thermometer
-    unit_of_measurement: °C
-    force_update: true
-    name: "Bedroom Temperature"
-  - platform: mqtt
     name: "Weather Station Temperature"
     state_topic: 'weather_station'
     value_template: '{{ value_json.temperature_C }}'
@@ -596,12 +587,6 @@ sensor:
     state_topic: 'weather_station'
     value_template: '{{ value_json.direction_str }} ({{ value_json.direction_deg }}°)'
     force_update: true
-  - platform: mqtt
-    state_topic: "sensors/bedroom/humidity"
-    icon: mdi:water-percent
-    unit_of_measurement: "%"
-    force_update: true
-    name: "Bedroom Humidity"
   - platform: time_date
     display_options:
       - 'time'
@@ -809,3 +794,6 @@ switch:
 
 openuv:
   api_key: !secret openuv_api_key
+
+esphome:
+config:
