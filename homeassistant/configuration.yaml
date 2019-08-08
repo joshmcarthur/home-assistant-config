@@ -305,6 +305,7 @@ group:
     view: no
     entities:
       - light.gateway_light_7811dcdae6ba
+      - light.living_room_lights
       - light.master_bedroom
       - light.hallway
       - light.top_of_stairs
@@ -377,6 +378,16 @@ group:
     entities:
       - sensor.speedtest_download
       - sensor.speedtest_upload
+      - sensor.filofax_status
+      - sensor.filofax_volume_used_volume_1
+      - sensor.filofax_smart_status_drive_1
+      - sensor.filofax_cpu_usage
+      - sensor.transmission_status
+      - sensor.transmission_down_speed
+      - sensor.transmission_up_speed
+      - sensor.transmission_active_torrents
+      - sensor.transmission_started_torrents
+      - sensor.transmission_completed_torrents
       - sensor.breaches_gemcarthur_nz_gmail_com
       - sensor.breaches_joshua_mcarthur_gmail_com
       - sensor.breaches_jc_ge_mcarthur_gmail_com
@@ -633,7 +644,15 @@ sensor:
          entity_id: binary_sensor.vibration_158d0002b61519
          value_template: '{{ relative_time(states.binary_sensor.vibration_158d0002b61519.last_changed) }}'
          icon_template: 'mdi:paw'
-
+  - platform: qnap
+    host: !secret qnap_host
+    username: !secret qnap_username  
+    password: !secret qnap_password
+    monitored_conditions:
+      - status
+      - cpu_usage
+      - volume_percentage_used
+      - drive_smart_status
 binary_sensor:
   - platform: mqtt
     name: "fireplace_active"
@@ -805,8 +824,21 @@ switch:
 
 openuv:
   api_key: !secret openuv_api_key
- 
+
+transmission:
+  host: !secret transmission_host
+  username: !secret transmission_username
+  password: !secret transmission_password
+  monitored_conditions:
+    - current_status
+    - download_speed
+    - upload_speed
+    - active_torrents
+    - started_torrents
+    - completed_torrents
+
 esphome:
 config:
 cast:
 system_health:
+stream:
