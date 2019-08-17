@@ -3,3 +3,4 @@ services:
   - docker
 script:
   - bash ci/homeassistant.sh
+  - bash ci/platformio.sh

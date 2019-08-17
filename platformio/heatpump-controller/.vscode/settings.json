@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.linux": {
+    "PATH": "/home/josh/.platformio/penv/bin:/home/josh/.platformio/penv:/home/josh/.dotfiles/bin:/home/josh/.nvm/versions/node/v10.16.0/bin:/home/josh/.yarn/bin:/home/josh/.config/yarn/global/node_modules/.bin:/home/josh/.rbenv/shims:/home/josh/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/josh/.dotfiles/zsh/plugins/git:/home/josh/.dotfiles/zsh/plugins/docker-compose-shortcuts:/home/josh/.dotfiles/zsh/plugins/curl:/home/josh/.dotfiles/zsh/plugins/ruby:/home/josh/.dotfiles/zsh/plugins/nodejs:/home/josh/.dotfiles/zsh/plugins/tmuxinator:/home/josh/.dotfiles/zsh/plugins/macbuntu:/home/josh/.antigen/bundles/zsh-users/zsh-syntax-highlighting:/home/josh/.antigen/bundles/zsh-users/zsh-autosuggestions",
+    "PLATFORMIO_CALLER": "vscode"
+  }
+}
