@@ -340,6 +340,7 @@ group:
     view: no
     entities:
       - sensor.power_price
+      - sensor.power_meter
   tides:
     name: Oceanic 
     view: no
