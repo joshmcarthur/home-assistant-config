@@ -192,6 +192,7 @@ group:
       - group.indoor_humidities
       - group.health
       - group.media
+      - group.brewing
   outside:
     name: "Outside"
     view: yes
@@ -400,6 +401,11 @@ group:
       - sensor.netatmo_indoor_co2
       - sensor.netatmo_indoor_noise
       - binary_sensor.fireplace_active
+  brewing:
+    name: "Brewing"
+    view: no
+    entities:
+      - sensor.fermenter_temperature
   media:
     name: "Media"
     view: no
