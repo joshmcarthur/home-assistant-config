@@ -39,12 +39,6 @@ homeassistant:
     sensor.garage_dht11_humidity:
       icon: mdi:water-percent
       friendly_name: "Garage Humidity"
-    sensor.studyclimate_3_0:
-      icon: mdi:water-percent
-      friendly_name: "Study Humidity"
-    sensor.studyclimate_3_1:
-      icon: mdi:thermometer
-      friendly_name: "Study Temperature"
     sensor.sensor_0010_dht11_temperature:
       friendly_name: "Roof Temperature"
       icon: mdi:thermometer
