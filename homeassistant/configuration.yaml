@@ -161,6 +161,12 @@ mqtt:
   keepalive: 60
   client_id: "home-assistant-v2"
   discovery: true
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
 
 # Track the sun
 sun:
@@ -627,8 +633,9 @@ sensor:
          value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local)[11:16] }}'
       cat_door_last_triggered:
          friendly_name: "Cat Door Entered/Exited"
-         entity_id: binary_sensor.vibration_158d0002b61519
-         value_template: '{{ relative_time(states.binary_sensor.vibration_158d0002b61519.last_changed) }}'
+         entity_id: input_datetime.cat_door_last_tilted
+         value_template: '{{ states("input_datetime.cat_door_last_tilted") }}'
+         device_class: timestamp
          icon_template: 'mdi:paw'
   - platform: qnap
     host: !secret qnap_host
@@ -665,6 +672,12 @@ input_boolean:
     name: Fake Heater
     icon: mdi:toggle-switch-off
     initial: off 
+
+input_datetime:
+  cat_door_last_tilted:
+    name: Cat Door Last Entered/Exited
+    has_date: true
+    has_time: true
 
 notify:
   - platform: html5
