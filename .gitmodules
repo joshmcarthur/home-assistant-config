@@ -1,0 +1,3 @@
+[submodule "homeassistant/vendor/mitsubishi-heatpump"]
+	path = homeassistant/vendor/mitsubishi-heatpump
+	url = git://github.com/SwiCago/HeatPump
