@@ -301,11 +301,17 @@ group:
     name: "Lighting"
     view: no
     entities:
-      - light.gateway_light_7811dcdae6ba
+      - light.tv_lighting
       - light.living_room_lights
       - light.master_bedroom
       - light.hallway
       - light.top_of_stairs
+      - light.upstairs_toilet_lighting
+      - light.stairwell_lights
+      - light.outside_lights
+      - light.dining_room_lighting
+      - switch.garden_wall_lighting
+      - switch.vegetable_garden_floodlights
       - switch.sonoff
       - switch.sonoff2
       - automation.holiday_mode
