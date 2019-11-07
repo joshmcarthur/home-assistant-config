@@ -733,22 +733,6 @@ netatmo:
   password: !secret netatmo_password
 
 automation:
-  - alias: "fermenter_temperature_balancer_auto_on"
-    action:
-      service: switch.turn_on
-      entity_id: switch.beer_switch
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.garagebasestation_2_1
-      below: 18
-  - alias: "fermenter_temperature_balancer_auto_off"
-    action:
-      service: switch.turn_off
-      entity_id: switch.beer_switch
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.garagebasestation_2_1
-      above: 18
   - alias: "Holiday Mode"
     trigger:
       platform: time
