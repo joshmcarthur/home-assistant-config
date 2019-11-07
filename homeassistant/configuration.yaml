@@ -319,9 +319,8 @@ group:
     name: "Hot Tub"
     view: no
     entities: 
-      - switch.hot_tub_3_20
-      - sensor.hot_tub_3_0
-      - sensor.hot_tub_3_10
+      - sensor.hot_tub_intake_temperature
+      - sensor.hot_tub_outlet_temperature
   garage_door:
     name: "Garage Door"
     view: no
