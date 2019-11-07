@@ -279,12 +279,14 @@ group:
     name: Utilities
     view: yes
     entities:
-      - group.network
-      - climate.heatpump_5_10
+      - group.lighting
+      - climate.heatpump
       - group.power
+      - group.water
       - group.recycling
-      - group.hot_tub
+      - group.network
       - group.fermenter
+      - group.hot_tub
   water:
     name: "Water"
     view: no
