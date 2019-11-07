@@ -443,6 +443,9 @@ camera:
     name: metservice_wellington_rain_radar_image
     still_image_url: "{{ states.sensor.metservice_wellington_rain_radar.state }}"
     limit_refetch_to_url_change: true
+  - platform: mqtt
+    name: letterbox_camera
+    topic: /cameras/letterbox/snapshot
 sensor:
   - platform: darksky
     api_key: !secret darksky_api_key
