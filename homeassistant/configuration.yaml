@@ -262,12 +262,12 @@ group:
     name: "Security"
     view: no
     entities:
-      - sensor.garage_door_1_status
-      - binary_sensor.door_window_sensor_158d000309bd44
-      - binary_sensor.smoke_sensor_158d00020b6b36
-      - binary_sensor.smoke_sensor_158d00020b6b7b
-      - binary_sensor.water_leak_sensor_158d000245c7e4
+      - binary_sensor.front_gate_garage_contact
+      - binary_sensor.0x00158d00020b6b7b_smoke
+      - binary_sensor.0x00158d0002cb5b74_smoke
+      - binary_sensor.0x00158d0002cb5bac_smoke
       - sensor.cat_door_last_triggered
+      - switch.patio_security_camera
   presence:
     name: "Who is home?"
     view: no
