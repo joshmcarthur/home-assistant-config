@@ -785,13 +785,6 @@ automation:
       service: notify.notify
       data:
         message: "Garage door was triggered"
-xiaomi_aqara:
-  discovery_retry: 5
-  gateways:
-    - host: 192.168.1.204
-      mac: !secret xiaomi_mihome_mac
-      key: !secret xiaomi_mihome_key
-
 wemo:
   static:
     - 192.168.1.206
