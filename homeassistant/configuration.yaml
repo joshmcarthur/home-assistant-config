@@ -738,24 +738,17 @@ automation:
           entity_id:
             - light.hallway
             - light.top_of_stairs
-  - alias: 'Night lighting'
+  - alias: 'Update Cat Door Last Tilted Date and Time'
     trigger:
-      platform: time
-      at: '21:00:00'
+      platform: state
+      entity_id: sensor.0x00158d0002b61519_action
+      to: 'tilt'
     action:
-      service: light.turn_on
-      entity_id: light.gateway_light_7811dcdae6ba
-      data:
-        brightness_pct: 10
-        color_name: "orange"
-  - alias: 'Night lighting - off'
-    trigger:
-      platform: sun
-      event: sunrise
-      offset: '+00:00:00'
-    action:
-      service: light.turn_off
-      entity_id: light.gateway_light_7811dcdae6ba
+      - service: input_datetime.set_datetime
+        data_template:
+          entity_id: input_datetime.cat_door_last_tilted
+          time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S", true)) }}'
+          date: '{{ (as_timestamp(now()) | timestamp_custom("%Y-%m-%d", true)) }}'
   - alias: 'CO2 notification'
     trigger:
       platform: numeric_state
