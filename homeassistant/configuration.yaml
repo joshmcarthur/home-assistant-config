@@ -669,6 +669,12 @@ climate:
     target_sensor: sensor.netatmo_outdoor_temperature
     initial_hvac_mode: "off"
     target_temp: 21
+  - platform: mitsubishi_mqtt
+    name: "Heatpump"
+    command_topic: "heatpump/set"
+    temperature_state_topic: "heatpump/status"
+    state_topic: "heatpump"
+
 
 # Used to associate fake thermometers to so that temperatures show in Google Assistant
 input_boolean:
