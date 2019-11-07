@@ -284,7 +284,11 @@ group:
       - group.recycling
       - group.hot_tub
       - group.fermenter
-      - group.lighting
+  water:
+    name: "Water"
+    view: no
+    entities:
+      - binary_sensor.0x00158d000245c7e4_water_leak
   recycling:
     name: "Recycling"
     view: no
