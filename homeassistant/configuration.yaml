@@ -181,6 +181,7 @@ group:
       - camera.garden
       - camera.front_door
       - camera.garage
+      - camera.patio
       - group.climate_summary
       - group.access_summary
   inside:
@@ -431,6 +432,9 @@ camera:
   - platform: generic
     name: garage
     still_image_url: !secret garage_camera_snapshot_url
+  - platform: generic
+    name: patio
+    still_image_url: !secret patio_camera_snapshot_url
   - platform: generic
     name: geonet_latest_quake_location
     still_image_url: !secret static_quake_location_url
