@@ -64,9 +64,9 @@ homeassistant:
     sensor.metlink_stop_well_route_kpl:
       friendly_name: "Next Wellington Departure"
       icon: mdi:train
-    camera.front_camera:
+    camera.front:
       friendly_name: "Outside - Front"
-    camera.garden_camera:
+    camera.garden:
       friendly_name: "Outside - Garden"
     camera.paremata_roundabout:
       friendly_name: "Paremata Intersection SH58 & 1"
@@ -180,9 +180,9 @@ group:
     view: yes
     entities:
       - group.presence
-      - camera.front_camera
-      - camera.garden_camera
-      - camera.portable_camera
+      - camera.front
+      - camera.garden
+      - camera.front_door
       - camera.garage
       - group.climate_summary
       - group.access_summary
@@ -422,18 +422,18 @@ camera:
     name: remutaka_hill
     still_image_url: "{{ states.sensor.metservice_remutaka_hill_camera_latest_url.state }}"
     limit_refetch_to_url_change: true
-  - platform: mjpeg
-    name: front_camera
-    mjpeg_url: !secret front_camera_stream_url
-  - platform: mjpeg
-    name: garden_camera
-    mjpeg_url: !secret garden_camera_stream_url
-  - platform: mjpeg
-    name: portable_camera
-    mjpeg_url: !secret portable_camera_stream_url
-  - platform: mjpeg
+  - platform: generic
+    name: front
+    still_image_url: !secret front_camera_snapshot_url
+  - platform: generic
+    name: garden
+    still_image_url: !secret garden_camera_snapshot_url
+  - platform: generic
+    name: front_door
+    still_image_url: !secret front_door_camera_snapshot_url
+  - platform: generic
     name: garage
-    mjpeg_url: !secret garage_camera_stream_url
+    still_image_url: !secret garage_camera_snapshot_url
   - platform: generic
     name: geonet_latest_quake_location
     still_image_url: !secret static_quake_location_url
