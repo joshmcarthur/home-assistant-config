@@ -837,3 +837,4 @@ config:
 cast:
 system_health:
 stream:
+history:
