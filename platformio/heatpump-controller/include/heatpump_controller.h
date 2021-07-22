@@ -5,7 +5,7 @@ const char* ssid     = STR(SSID_NAME);
 const char* password = STR(SSID_PASSWORD);
 
 // mqtt server settings
-const char* mqtt_server   = "192.168.1.175";
+const char* mqtt_server   = "192.168.1.180";
 const int mqtt_port       = 1883;
 
 
